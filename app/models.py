@@ -1,7 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
+from .extensions import db
 from datetime import datetime
 
-db = SQLAlchemy()
 
 class Admin(db.Model):
     __tablename__ = 'admin'
