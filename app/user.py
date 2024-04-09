@@ -5,6 +5,16 @@ import jwt
 from auth import token_required
 from flask import jsonify
 
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    new_user = User(user_name=data['user_name'], password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({'message': 'User created successfully'}), 201
+
+
 @app.route('/user_details', methods=['GET'])
 @token_required
 def user_details(current_user):

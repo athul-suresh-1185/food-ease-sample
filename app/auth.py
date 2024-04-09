@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from functools import wraps
 from models import User, DailyMenu  
 import jwt
+from flask_bcrypt import Bcrypt
 
 
 def token_required(func):
@@ -25,7 +26,6 @@ def token_required(func):
 @app.route('/user-login', methods=['POST'])
 def login():
     auth = request.authorization
-
     if not auth or not auth.username or not auth.password:
         return jsonify({'message': 'Could not verify'}), 401
 
@@ -34,7 +34,7 @@ def login():
     if not user:
         return jsonify({'message': 'User not found'}), 401
 
-    if user.password != auth.password:
+    if not bcrypt.check_password_hash(user.password, auth.password):
         return jsonify({'message': 'Invalid password'}), 401
 
     token = jwt.encode({'user_id': user.id}, app.config['SECRET_KEY'], algorithm='HS256')
