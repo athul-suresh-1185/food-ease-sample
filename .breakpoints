@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "app/__init__.py": [
+      {
+        "id": "bcebf4b4-94ed-49f7-8ccf-7bcfdec03fcf",
+        "line": 4,
+        "version": 97,
+        "index": 84
+      }
+    ]
+  }
 }
